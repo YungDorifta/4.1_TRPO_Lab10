@@ -1,0 +1,100 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+/*
+Table follows {
+  following_user_id integer
+  followed_user_id integer
+  created_at timestamp 
+}
+
+Table users {
+  id integer [primary key]
+  username varchar
+  role varchar
+  created_at timestamp
+}
+
+Table posts {
+  id integer [primary key]
+  title varchar
+  body text [note: 'Content of the post']
+  user_id integer
+  status varchar
+  created_at timestamp
+}
+*/
+
+
+
+Table Users{
+  userID integer [primary key]
+  FIO text 
+  role text
+  email text
+  phone integer
+  password text
+}
+
+Table Autopark{
+  autoID integer [primary key]
+  modelID integer
+  licensePlate text 
+  mileage integer
+  pricePerHour integer
+}
+
+Table ModelTable{
+  modelID integer
+  brand text
+  model text
+  typeID integer
+}
+
+Table TypeTable{
+  typeID integer
+  body text
+  group varchar
+}
+
+Table Rents{
+  rentID integer [primary key]
+  userID integer
+  autoID integer
+  optionsID integer
+  startTime timestamp
+  endTime timestamp
+  insurance text
+}
+
+Table Options{
+  optionsID integer
+  trailer text
+  bicycleRack text
+  babySeat text
+}
+
+Table Fixes{
+  fixID integer [primary key]
+  autoID integer
+  description text
+  appeared timestamp
+  fixed timestamp
+}
+
+Table TechMessages{
+  rentID integer [primary key]
+  start timestamp
+  description text
+} 
+
+
+
+
+Ref: Users.userID < Rents.userID
+Ref: Autopark.autoID < Rents.autoID
+Ref: Autopark.autoID < Fixes.autoID
+Ref: Rents.rentID - TechMessages.rentID
+Ref: Autopark.modelID > ModelTable.modelID
+Ref: ModelTable.typeID > TypeTable.typeID
+Ref: Rents.optionsID > Options.optionsID
